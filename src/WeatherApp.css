@@ -19,7 +19,7 @@
     cursor: pointer;
   }
   
-  .weather-row {
+  .weather-cards {
     display: flex;
     justify-content: center;
     gap: 20px;

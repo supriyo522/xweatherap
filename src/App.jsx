@@ -59,7 +59,7 @@ const WeatherApp = () => {
 
       {/* Show weather details in 1 row & 4 columns */}
       {weather && weather.current && weather.location && (
-        <div className="weather-row">
+        <div className="weather-cards">
           <div className="weather-card">
             <h3>Temperature</h3>
             <p>{weather.current.temp_c}°C</p>
