@@ -8,6 +8,7 @@ const WeatherApp = () => {
 
   const fetchWeather = async () => {
     if (!city) return;
+    
     setLoading(true);
     setError(null);
     setWeather(null);
@@ -16,20 +17,21 @@ const WeatherApp = () => {
       const response = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=7fe930aff8a74a67b5862053250203&q=${city}`
       );
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch weather data");
       }
-      
+
       const data = await response.json();
+
       if (data.error) {
-        throw new Error("Failed to fetch weather data");
+        throw new Error("Invalid city name, please try again.");
       }
-      
+
       setWeather(data);
     } catch (err) {
-      setError("Failed to fetch weather data");
-      alert("Failed to fetch weather data");
+      setError(err.message || "Failed to fetch weather data");
+      console.error("Weather API Error:", err);
     } finally {
       setLoading(false);
     }
@@ -45,12 +47,15 @@ const WeatherApp = () => {
         placeholder="Enter city name"
       />
       <button onClick={fetchWeather}>Search</button>
-      {loading && <p className="loading">Loading data…</p>}
+
+      {loading && <p className="loading">Loading data...</p>}
+
       {error && <p className="error" style={{ color: "red" }}>{error}</p>}
-      {weather && (
+
+      {weather && weather.current && weather.location && (
         <div className="weather-cards">
           <div className="weather-card">
-            {/* <h2>{weather.location.name}</h2> */}
+            <h2>{weather.location.name}, {weather.location.country}</h2>
             <p>Temperature: {weather.current.temp_c}°C</p>
             <p>Humidity: {weather.current.humidity}%</p>
             <p>Condition: {weather.current.condition.text}</p>
