@@ -45,8 +45,8 @@ const WeatherApp = () => {
         placeholder="Enter city name"
       />
       <button onClick={fetchWeather}>Search</button>
-      {loading && <p>Loading data…</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading && <p className="loading">Loading data…</p>}
+      {error && <p className="error" style={{ color: "red" }}>{error}</p>}
       {weather && (
         <div className="weather-cards">
           <div className="weather-card">
