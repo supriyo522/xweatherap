@@ -7,8 +7,8 @@ const WeatherApp = () => {
   const [error, setError] = useState(null);
 
   const fetchWeather = async () => {
-    if (!city) return;
-    
+    if (!city.trim()) return; // Prevent empty input requests
+
     setLoading(true);
     setError(null);
     setWeather(null);
@@ -48,18 +48,22 @@ const WeatherApp = () => {
       />
       <button onClick={fetchWeather}>Search</button>
 
+      {/* Show loading message */}
       {loading && <p className="loading">Loading data...</p>}
 
+      {/* Show error message */}
       {error && <p className="error" style={{ color: "red" }}>{error}</p>}
 
+      {/* Show weather details after successful fetch */}
       {weather && weather.current && weather.location && (
         <div className="weather-cards">
           <div className="weather-card">
             <h2>{weather.location.name}, {weather.location.country}</h2>
-            <p>Temperature: {weather.current.temp_c}°C</p>
-            <p>Humidity: {weather.current.humidity}%</p>
-            <p>Condition: {weather.current.condition.text}</p>
-            <p>Wind Speed: {weather.current.wind_kph} kph</p>
+            <p><strong>Temperature:</strong> {weather.current.temp_c}°C</p>
+            <p><strong>Humidity:</strong> {weather.current.humidity}%</p>
+            <p><strong>Condition:</strong> {weather.current.condition.text}</p>
+            <p><strong>Wind Speed:</strong> {weather.current.wind_kph} kph</p>
+            <img src={weather.current.condition.icon} alt="Weather Icon" />
           </div>
         </div>
       )}
